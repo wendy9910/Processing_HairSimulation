@@ -2,7 +2,7 @@ PVector [] p=new PVector[3];
 void setup(){
   size(500,500);
   p[0] = new PVector(100,250);
-  p[1] = new PVector(400,250);
+  p[1] = new PVector(500,250);
  
 }
 void draw(){
@@ -24,7 +24,7 @@ void updateSpring(){
   v1.mult((len-150)/100);
   p[1].add(v1);
   p[0].sub(v1);
-  
+  print(len,"\n");
 }
 
 void mousePressed(){

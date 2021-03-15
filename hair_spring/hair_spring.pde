@@ -28,36 +28,23 @@ void draw(){
     ellipse(pt.x,pt.y,15,15);
   }
   if(value!=0)update();
-  if(keyPressed==true){
-    if(value!=0 && keyCode == RIGHT){
-      PVector pt = p.get(0);
-      pt.add(5,-1);
-    }
-    if(value!=0 && keyCode == LEFT){
-      PVector pt = p.get(0);
-      pt.add(-5,-1);
-    }
-  }
 }
 void mousePressed(){
- 
   PVector pt = new PVector(mouseX,mouseY);
   p.add(pt);
   v.add(new PVector());
   last=pt;
-
 }
 
 void mouseDragged(){
-
-  while(dist(mouseX,mouseY,last.x,last.y)>=55){
+  while(dist(mouseX,mouseY,last.x,last.y)>=50){
     PVector pt = new PVector(mouseX,mouseY);
     p.add(pt);
     v.add(new PVector());
     last=pt;
   }
 }
-PVector g;
+PVector g; 
 void update(){//以後可能會有問題
   for(int i=1;i<p.size();i++){///i:0 (red) will not move //<>//
     PVector v1 = v.get(i);
@@ -65,31 +52,26 @@ void update(){//以後可能會有問題
     v1.add(g);
     pt1.add(v1);   
     float s=1;
-    PVector pt2 = p.get(i-1);
-    
     if(i!=p.size()-1){
       PVector pt0 = p.get(i+1);
       float d2= PVector.dist(pt1, pt0);
       if(d2>40){
           n1 = PVector.sub(pt0, pt1).normalize();
-          n1.y *= (d2-40)*s;
-          n1.x *= (d2-40)*s;
-          //pt1.y+=n1.y;
-          //pt1.x+=n1.x;
+          n1.y *= (d2-50)*s;
+          n1.x *= (d2-50)*s;
+          pt1.y+=n1.y;
+          pt1.x+=n1.x;
       } 
     }
+    PVector pt2 = p.get(i-1);
     float d = PVector.dist(pt1, pt2);
-    if(d>45){ 
+    if(d>40){ 
       n = PVector.sub(pt2, pt1).normalize();
-      n.y *= (d-40)*s;
-      n.x *= (d-40)*s;
-      //pt1.y+=n.y;
-      //pt1.x+=n.x;
+      n.y *= (d-50)*s;
+      n.x *= (d-50)*s;
+      pt1.y+=n.y;
+      pt1.x+=n.x;
     }
-    
-    
-    pt1.x+=n.x+n1.x;
-    pt1.y+=n.y+n1.y;
   }
 }
 
