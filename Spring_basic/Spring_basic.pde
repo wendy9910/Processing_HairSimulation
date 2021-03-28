@@ -1,54 +1,30 @@
 PVector [] p=new PVector[3];
-PVector position;//位置
-PVector velocity;//速度
-PVector acceleration;//加速度
-float damping = 0.95;//阻力
-float gravity = 9.8;
-  
+PVector p0,position,velocity,acceleration;//位置、速度、加速度、重力
+
 void setup(){
-  size(500,500);
-  position = new PVector(200,150);
+  size(800,800);
+  p0 = new PVector(width/2,0);
+  position = new PVector(width/2,100);
   velocity = new PVector();
   acceleration = new PVector();
-
-  p[0] = new PVector(position.x,position.y);
-  p[1] = new PVector(position.x+100,position.y);
+  
+  p[0] = new PVector(p0.x,p0.y);
+  p[1] = new PVector(position.x,position.y);
  
 }
 void draw(){
-  background(255);
-  line(p[0].x,p[0].y,p[1].x,p[1].y);
-  for(int i=0;i<2;i++){
-    if(i==0) fill(255,0,0);
-    else if(i==1) fill(0,255,0);
-    ellipse(p[i].x,p[i].y,10,10);
-  }
+  background(255); 
   
-  updateSpring();
+  strokeWeight(2);
+  line(p0.x,p0.y,position.x,position.y);
+  fill(255,0,0);
+  ellipse(p0.x,p0.y,30,30);
+  fill(0,255,0);
+  ellipse(position.x,position.y,30,30);
+  
+  Spring();
+  update();//速度、位置變化
 }
-
-void updateSpring(){
-  acceleration.y+=gravity;
-  velocity.add(acceleration);
-  p[1].add(velocity);
-  
-  float len = PVector.dist(p[0], p[1]);
-  PVector v1 = PVector.sub(p[0], p[1]);
-  print(v1);
-  
-  v1.normalize();
-  
-  
-  v1.mult((len-50)/100);
-  p[1].add(v1);
-  //p[0].sub(v1);
-  //print(len,"\n");
-  
-  velocity.mult(0);
-  acceleration.mult(0);
-}
-
 void mousePressed(){
-  p[0].x=mouseX;
-  p[0].y=mouseY;
+  p0 = new PVector(mouseX,mouseY);
 }
